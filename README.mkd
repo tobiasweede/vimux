@@ -4,6 +4,39 @@ Easily interact with tmux from vim.
 
 ![vimux](https://www.braintreepayments.com/blog/content/images/blog/vimux3.png)
 
+---
+### Changes in this fork
+
+This fork includes an option to define any pane as active runner.
+
+Currently in the main repo you only have the options of using the last openned pane or opening a new one.
+
+### Usage
+
+You can run the command direct providing an index:
+```
+:VimuxSetRunner 1
+```
+
+You can add a mapping to prompt for an index:
+```
+ map <leader>vs :VimuxSetRunner(input('runner index: '))<CR>
+```
+
+*Tip: In TMUX `<ctrl> + b` and then `q` shows indexes for visible panes.*
+
+### Why?
+
+I'm using this fork because the original repo doesn't seem to be merging new features for some time already.
+
+In my workflow this feature was required in the following scenarios:
+
+- After restarting VIM I was not able to use the same runner pane I was using before.
+- When reorganising panes the indexes may change causing unexpected behaviours.
+- Running commands from VIM in more than one pane is a common use case to me.
+
+---
+
 What inspired me to write vimux was [tslime.vim](https://github.com/kikijump/tslime.vim), a plugin that lets you send input to tmux. While tslime.vim works well, I felt it wasn't optimized for my primary use case which was having a smaller tmux pane that I would use to run tests or play with a REPL.
 
 My goal with vimux is to make interacting with tmux from vim effortless. By default when you call `VimuxRunCommand` vimux will create a 20% tall horizontal pane under your current tmux pane and execute a command in it without losing focus of vim. Once that pane exists whenever you call `VimuxRunCommand` again the command will be executed in that pane. As I was using vimux myself I wanted to rerun commands over and over. An example of this was running the current file through rspec. Rather than typing that over and over I wrote `VimuxRunLastCommand` that will execute the last command you called with `VimuxRunCommand`.
@@ -17,7 +50,7 @@ With **[Vundle](https://github.com/gmarik/Vundle.vim)**: 'Plugin benmills/vimux'
 
 Otherwise download the latest [tarball](https://github.com/benmills/vimux/tarball/master), extract it and move `plugin/vimux.vim` inside `~/.vim/plugin`. If you're using [pathogen](https://github.com/tpope/vim-pathogen), then move the entire folder extracted from the tarball into `~/.vim/bundle`.
 
-_Notes:_ 
+_Notes:_
 
 * Vimux assumes a tmux version >= 1.5. Some older versions might work but it is recommeded to use at least version 1.5.
 
